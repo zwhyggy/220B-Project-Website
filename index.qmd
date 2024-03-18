@@ -1,0 +1,25 @@
+---
+title: "220B Project Website"
+
+about: 
+  template: marquee
+  image: 220B.jpg
+  links: 
+    - text: comment button
+      href: mailto:yuan_zhou@ucsb.edu
+      icon: chat-left-fill
+
+comments:
+  hypothesis: true
+---
+
+
+
+
+Welcome to my 220B Course Project site. 
+
+The project can be accessed from the navigation bar to the left.
+
+There is a comment button below as any feedback is much appreciated!
+
+

@@ -1,0 +1,27 @@
+---
+title: "Factors in COVID-19 Diagnosis"
+format:
+  html:
+    toc: true
+    theme: solar
+    toc-location: left
+    html-math-method: katex
+    css: styles.css
+    fontsize: 1.1em
+    smooth-scroll: true
+    comments:
+      hypothesis: 
+        theme: clean
+
+editor: visual
+---
+
+## Section 1
+
+## Section 2
+
+## Section 3
+
+## Conclusion
+
+## Appendix

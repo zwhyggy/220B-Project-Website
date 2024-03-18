@@ -1,0 +1,21 @@
+project:
+  type: website
+
+website:
+  title: "220B Project Website"
+  sidebar:
+    style: "docked"
+    search: true
+    contents:
+      - href: index.qmd
+        text: Home
+      - 220B write up.qmd
+
+format:
+  html:
+    theme: pulse
+    css: styles.css
+    toc: true
+
+editor: visual
+
