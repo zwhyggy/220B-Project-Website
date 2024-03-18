@@ -1,6 +1,8 @@
 project:
   type: website
   output-dir: docs
+  
+# ~ additional metadata excluded for brevity ~
 
 website:
   title: "220B Project Website"
