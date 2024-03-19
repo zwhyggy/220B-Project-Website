@@ -66,6 +66,22 @@ ul.task-list li input[type="checkbox"] {
 </script>
 <script async="" src="https://hypothes.is/embed.js"></script>
 
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css">
 
 <link rel="stylesheet" href="styles.css">
 </head>
@@ -122,11 +138,17 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#section-1" id="toc-section-1" class="nav-link active" data-scroll-target="#section-1">Section 1</a></li>
-  <li><a href="#section-2" id="toc-section-2" class="nav-link" data-scroll-target="#section-2">Section 2</a></li>
-  <li><a href="#section-3" id="toc-section-3" class="nav-link" data-scroll-target="#section-3">Section 3</a></li>
+  <li><a href="#executive-summary" id="toc-executive-summary" class="nav-link active" data-scroll-target="#executive-summary">Executive Summary</a></li>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#methods" id="toc-methods" class="nav-link" data-scroll-target="#methods">Methods</a>
+  <ul class="collapse">
+  <li><a href="#topic-1" id="toc-topic-1" class="nav-link" data-scroll-target="#topic-1">Topic 1:</a></li>
+  <li><a href="#topic-2" id="toc-topic-2" class="nav-link" data-scroll-target="#topic-2">Topic 2:</a></li>
+  </ul></li>
+  <li><a href="#results-conclusions-and-recommendations" id="toc-results-conclusions-and-recommendations" class="nav-link" data-scroll-target="#results-conclusions-and-recommendations">Results, conclusions and recommendations</a></li>
   <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
   <li><a href="#appendix" id="toc-appendix" class="nav-link" data-scroll-target="#appendix">Appendix</a></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
   </ul>
 </nav>
 </nav>
@@ -154,20 +176,81 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
-<section id="section-1" class="level2">
-<h2 class="anchored" data-anchor-id="section-1">Section 1</h2>
+<section id="executive-summary" class="level2">
+<h2 class="anchored" data-anchor-id="executive-summary">Executive Summary</h2>
+<p>The purpose of this report is to address two topics: (1) The association between COVID-19 vaccination and infection. Does this association depend on demographics. (2) Make predictions for COVID-19 infection using laboratory tests and demographic variables. There is a complication as not every data entry has all the laboratory tests. Imputation methods are implemented to address the missing data.</p>
+<p>Conclusion:</p>
 </section>
-<section id="section-2" class="level2">
-<h2 class="anchored" data-anchor-id="section-2">Section 2</h2>
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<p>The COVID-19 pandemic has changed everyone’s life these past four years. The very first COVID case in the US was found in the Seattle area, where I was studying at the time. It was an experience to say at the least to be part of that ground zero COVID moment.</p>
+<p>Here is a news report from that moment in time:</p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/FMc280EtXxs?si=qhrqFArvQboAPvui" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="">
+</iframe>
+<p>After a couple years, the medical professionals were able to develop vaccinations for COVID-19. However, there were still a surge of COVID cases from time to time. It would be an interesting and important to study if there is an association between the newly infected and their vaccination status, as well as other variables that is available.</p>
+<p>The data set contains 608 observations. Each observation contains infection status, vaccination status, demographic variables(gender, race, and age). As mentioned above, there are laboratory tests available for certain observations. The data is provided to me, and I don’t have a full understanding of how the data is collected, however, it would be safe to speculate that they were collected in a place like a hospital and such.</p>
+<p>There are two topics that this report is aiming to address:</p>
+<ol type="1">
+<li><p>The association between COVID-19 vaccination and infection. Does this association depend on demographics</p></li>
+<li><p>The relationship between COVID-19 infection and vaccination status,laboratory tests and demographic variables. Two models will be presented based on how much information was used. A assessment of the model performances will also be presented at the end.</p></li>
+</ol>
 </section>
-<section id="section-3" class="level2">
-<h2 class="anchored" data-anchor-id="section-3">Section 3</h2>
+<section id="methods" class="level2">
+<h2 class="anchored" data-anchor-id="methods">Methods</h2>
+<section id="topic-1" class="level3">
+<h3 class="anchored" data-anchor-id="topic-1">Topic 1:</h3>
+</section>
+<section id="topic-2" class="level3">
+<h3 class="anchored" data-anchor-id="topic-2">Topic 2:</h3>
+<p>There are 2 models that can be built based on how much information was used.</p>
+<ol type="1">
+<li>Build a model based on age, race, vaccinated, and gender, which were all available and there was no missing data.</li>
+</ol>
+<p>A couple of techniques that are used in this model building need to be discussed before presenting the model</p>
+<p><strong>Cross Validation</strong>:</p>
+<p>Cross Validation(CV) is a practice where portions of the data is reserved to test and train the model.The main type of CV used in this project is called K fold CV.</p>
+<p>K fold CV is a technique that divides data into K folds of equal sizes. One fold is used as a validation set, and the rest are used to train the model. Repeat this step for K times, where each fold is used as a validation fold. Take the average of the prediction errors.</p>
+<p>K will be set to 10 in this project. The main use of CV for this project is used with LASSO method(detailed explanation in the following section)</p>
+<p><strong>Logistic Regression</strong>:</p>
+<p>Logistic Regression is a form of a Generalized Linear Model(GLM). The GLM generalizes linear regression by allowing the linear model to be related to the response variable via a link function.</p>
+<p>A GLM contains 3 components:</p>
+<p>Random Component: This refers to the probability distribution of the response variable(Y)</p>
+<p>Systematic Component: Combination of linear predictors <span class="math inline">\beta_0 +\beta_1x_{1} + \beta_2x_{2} +...\beta_px_{p}</span></p>
+<p>Link Function: link between random and systematic components. In this case, it’s the logit function.</p>
+<p>Logistic Regression estimates the probability of an event occurring, in this case, infection, based on given a set of independent variables(demographic variable and lab tests).</p>
+<p>Once the probabilities are estimated, there will be a threshold that needs to be determined. For the probabilities less than that threshold, it will be set to negative, anything above the threshold will be set to positive. In the context of this problem, it will be the COVID diagnosis.</p>
+<p>To perform some EDA before fitting the model:</p>
+<ol type="a">
+<li>A initial look at the data frame. Race, vaccinated and gender will be coded as factors, the infection status(y) is coded as 0 if negative and 1 if positive</li>
+</ol>
+<p><img src="df1.png" class="img-fluid"></p>
+<ol start="2" type="a">
+<li>A initial look at the distribution of the infected. (Negative is coded as 0). Out of everyone who is tested, an overwhelming majority have a negative test result.</li>
+</ol>
+<p><img src="hist1(limited).png" class="img-fluid"></p>
+<p>It is a good practice to perform data splitting before building the model. In this case, the data frame will be separated based on the outcome variable y. Then take a 20% of random samples from the positive results and a 20% of random samples from the negative results as the testing set. The remaining will be the training set. This division will ensure there are positive cases in both training and testing, since there an overwhelming majority have a negative test result.</p>
+<p>A model is built based on the training data with the implementation of CV. The model results is presented in the next section.</p>
+<p>A prediction is made using the model and the training data. A detailed presentation and comparison between the models is presented in the next section.</p>
+<ol start="2" type="1">
+<li>Build a model based when demographic variables (age, race, vaccinated, and gender) and laboratory tests are available</li>
+</ol>
+<p>As mentioned above, the lab test results are not available for all observations due to practical reasons. Therefore, an imputation of the missing data will be performed. The first step is to investigate which tests have missing values:</p>
+<p><img src="missing_lab.png" class="img-fluid"> <strong>It is important to note that the distribution of all of these lab tests are normalized to have a mean 0 and standard deviation 1.</strong></p>
+<p>An imputation procedure called multiple imputation</p>
+</section>
+</section>
+<section id="results-conclusions-and-recommendations" class="level2">
+<h2 class="anchored" data-anchor-id="results-conclusions-and-recommendations">Results, conclusions and recommendations</h2>
 </section>
 <section id="conclusion" class="level2">
 <h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
 </section>
 <section id="appendix" class="level2">
 <h2 class="anchored" data-anchor-id="appendix">Appendix</h2>
+</section>
+<section id="references" class="level2">
+<h2 class="anchored" data-anchor-id="references">References</h2>
+<p><a href="https://online.stat.psu.edu/stat504/lesson/beyond-logistic-regression-generalized-linear-models-glm">GLM</a></p>
 
 
 </section>
