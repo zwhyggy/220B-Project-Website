@@ -254,10 +254,18 @@ ul.task-list li input[type="checkbox"] {
 <p>These are the variables that were determined as significant using LASSO.</p>
 <p>The procedure then becomes impute the missing data for these variables, fit the model and save the coefficients. This procedure will be repeated 5 times and the coefficients of the final model will be the average of the 5 sets of coefficients:</p>
 <p><img src="final_coef.png" class="img-fluid"></p>
+<p>The prediction is then made using the final model and the testing data. As mentioned above, the logistic model predicts the probability of a binary response. Therefore, a threshold is necessary to convert the predicted probabilities to binary responses.</p>
+<p>A assessment of the thresholds is performed:</p>
+<p><img src="threshold.png" class="img-fluid"></p>
+<p>The threshold is set to 1.212678e-01 in this project to create a balance between specificity and sensitivity.</p>
+<p>Once the threshold is determined, prediction using the testing data and the two models are made. A detailed look at their performances is presented in the next section</p>
 </section>
 </section>
 <section id="results-conclusions-and-recommendations" class="level2">
 <h2 class="anchored" data-anchor-id="results-conclusions-and-recommendations">Results, conclusions and recommendations</h2>
+<p><strong>Results</strong></p>
+<p>Topic 2:</p>
+<p>threshold</p>
 </section>
 <section id="conclusion" class="level2">
 <h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>

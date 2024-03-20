@@ -182,6 +182,23 @@ Once the threshold is determined, prediction using the testing data and the two 
 
 **Results**
 
+To best present the results visually, a confusion and a ROC curve plot are construed 
+
+Model w/o lab tests: 
+
+![](CM_limited.png)
+
+
+![](ROC_limited.png)
+
+
+
+
+
+![](CM.png)
+
+![](ROC.png)
+
 
 
 Topic 2: 
