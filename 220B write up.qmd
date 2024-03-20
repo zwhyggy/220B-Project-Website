@@ -16,6 +16,11 @@ format:
 editor: visual
 ---
 
+```{r, echo=FALSE}
+library(knitr)
+
+```
+
 ## Executive Summary
 
 The purpose of this report is to address two topics: (1) The association between COVID-19 vaccination and infection. Does this association depend on demographics. (2) Make predictions for COVID-19 infection using laboratory tests and demographic variables. There is a complication as not every data entry has all the laboratory tests. Imputation methods are implemented to address the missing data.
@@ -51,6 +56,75 @@ There are two topics that this report is aiming to address:
 ## Methods
 
 ### Topic 1: 
+
+To investigate the association between COVID-19 infection and vaccination can be done by checking independence of these two variables. Then the independence can be further tested by breaking the samples into different groups based on gender, race or age. 
+
+
+A Chi-square test is used in this case to study of the rows and columns of a contingency table are statistically associated. The null hypothesis is that the variables are independent, and the alternative is the variables are dependent.
+
+
+The Pearson statistic is calculated as : $\frac{ \sum (o-e)^2}{e}$
+
+where o is the observed value and e is the expected value. 
+
+The first contingency table only studies the vaccination status and infection status:
+
+```{r, echo=FALSE}
+
+ct1 <- matrix(nrow = 3, ncol = 3)
+ct1[,1] <- c("  ","Not infected", "infected")
+ct1[,2] <- c("Not Vaccinated", "250","54")
+
+ct1[,3] <- c( "Vaccinated","274","30")
+
+kable(ct1)
+
+```
+
+In this first case, the p-value is calculated to be $0.004791817$, therefore, under the Pearson statistic, the null of independence is rejected. 
+
+
+
+
+To investigate if the association depends on gender, race, age, the same technique is applied for each case: 
+
+*gender*
+
+```{r, echo=FALSE}
+
+ct1 <- matrix(nrow = 3, ncol = 3)
+ct1[,1] <- c("  ","Not infected", "infected")
+ct1[,2] <- c("Female", "267","32")
+
+ct1[,3] <- c( "Male","257","52")
+
+kable(ct1)
+
+```
+
+The Pearson Statistic is calculated to be 4.789, and the p value equals to *0.028*. Therefore, under the Pearson statistic,at the 5% significance level, the null of independence is rejected. 
+
+
+
+*Race*
+
+```{r, echo=FALSE}
+
+ct2 <- matrix(nrow = 3, ncol = 5)
+ct2[,1] <- c("  ","Not infected", "infected")
+ct2[,2] <- c("Black", "57","15")
+
+ct2[,3] <- c( "Hispanic","97","14")
+ct2[,4] <- c( "Other","58","7")
+ct2[,5] <- c( "White","312","48")
+
+kable(ct2)
+
+```
+
+
+The Pearson Statistic is calculated to be 3.689, and the p value equals to *0.054*. Therefore, under the Pearson statistic,at the 5% significance level, the null of independence failed to be rejected. 
+
 
 
 ### Topic 2: 
@@ -99,8 +173,6 @@ The main effect of this method is that some of the betas are shrunk exactly to z
 To perform some EDA before fitting the model: 
 
 (a) A initial look at the data frame. Race, vaccinated and gender will be coded as factors, the infection status(y) is coded as 0 if negative and 1 if positive
-
-![](df1.png)
 
 
 (b) A initial look at the distribution of the infected. (Negative is coded as 0). Out of everyone who is tested, an overwhelming majority have a negative test result.
@@ -219,6 +291,9 @@ Overall, the model with the lab tests performed better when it comes to predicti
 
 **Recommendations**
 
+Under dispersion 
+
+Threshold chosen arbitrarily, 
 
 
 

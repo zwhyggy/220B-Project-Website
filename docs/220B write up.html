@@ -198,6 +198,92 @@ ul.task-list li input[type="checkbox"] {
 <h2 class="anchored" data-anchor-id="methods">Methods</h2>
 <section id="topic-1" class="level3">
 <h3 class="anchored" data-anchor-id="topic-1">Topic 1:</h3>
+<p>To investigate the association between COVID-19 infection and vaccination can be done by checking independence of these two variables. Then the independence can be further tested by breaking the samples into different groups based on gender, race or age.</p>
+<p>A Chi-square test is used in this case to study of the rows and columns of a contingency table are statistically associated. The null hypothesis is that the variables are independent, and the alternative is the variables are dependent.</p>
+<p>The Pearson statistic is calculated as : <span class="math inline">\frac{ \sum (o-e)^2}{e}</span></p>
+<p>where o is the observed value and e is the expected value.</p>
+<p>The first contingency table only studies the vaccination status and infection status:</p>
+<div class="cell">
+<div class="cell-output-display">
+<table class="table table-sm table-striped small">
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Not Vaccinated</td>
+<td style="text-align: left;">Vaccinated</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Not infected</td>
+<td style="text-align: left;">250</td>
+<td style="text-align: left;">274</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">infected</td>
+<td style="text-align: left;">54</td>
+<td style="text-align: left;">30</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>In this first case, the p-value is calculated to be <span class="math inline">0.004791817</span>, therefore, under the Pearson statistic, the null of independence is rejected.</p>
+<p>To investigate if the association depends on gender, race, age, the same technique is applied for each case:</p>
+<p><em>gender</em></p>
+<div class="cell">
+<div class="cell-output-display">
+<table class="table table-sm table-striped small">
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Female</td>
+<td style="text-align: left;">Male</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Not infected</td>
+<td style="text-align: left;">267</td>
+<td style="text-align: left;">257</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">infected</td>
+<td style="text-align: left;">32</td>
+<td style="text-align: left;">52</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>The Pearson Statistic is calculated to be 4.789, and the p value equals to <em>0.028</em>. Therefore, under the Pearson statistic,at the 5% significance level, the null of independence is rejected.</p>
+<p><em>Race</em></p>
+<div class="cell">
+<div class="cell-output-display">
+<table class="table table-sm table-striped small">
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Black</td>
+<td style="text-align: left;">Hispanic</td>
+<td style="text-align: left;">Other</td>
+<td style="text-align: left;">White</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Not infected</td>
+<td style="text-align: left;">57</td>
+<td style="text-align: left;">97</td>
+<td style="text-align: left;">58</td>
+<td style="text-align: left;">312</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">infected</td>
+<td style="text-align: left;">15</td>
+<td style="text-align: left;">14</td>
+<td style="text-align: left;">7</td>
+<td style="text-align: left;">48</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>The Pearson Statistic is calculated to be 3.689, and the p value equals to <em>0.054</em>. Therefore, under the Pearson statistic,at the 5% significance level, the null of independence failed to be rejected.</p>
 </section>
 <section id="topic-2" class="level3">
 <h3 class="anchored" data-anchor-id="topic-2">Topic 2:</h3>
@@ -224,15 +310,13 @@ ul.task-list li input[type="checkbox"] {
 <p>The main effect of this method is that some of the betas are shrunk exactly to zero, resulting in a simpler model.</p>
 <p>To perform some EDA before fitting the model:</p>
 <ol type="a">
-<li>A initial look at the data frame. Race, vaccinated and gender will be coded as factors, the infection status(y) is coded as 0 if negative and 1 if positive</li>
-</ol>
-<p><img src="df1.png" class="img-fluid"></p>
-<ol start="2" type="a">
-<li>A initial look at the distribution of the infected. (Negative is coded as 0). Out of everyone who is tested, an overwhelming majority have a negative test result.</li>
+<li><p>A initial look at the data frame. Race, vaccinated and gender will be coded as factors, the infection status(y) is coded as 0 if negative and 1 if positive</p></li>
+<li><p>A initial look at the distribution of the infected. (Negative is coded as 0). Out of everyone who is tested, an overwhelming majority have a negative test result.</p></li>
 </ol>
 <p><img src="hist1(limited).png" class="img-fluid"></p>
 <p>It is a good practice to perform data splitting before building the model. In this case, the data frame will be separated based on the outcome variable y. Then take a 20% of random samples from the positive results and a 20% of random samples from the negative results as the testing set. The remaining will be the training set. This division will ensure there are positive cases in both training and testing, since there an overwhelming majority have a negative test result.</p>
-<p>A model is built based on the training data with the implementation of CV and LASSO to reduce the model. The model results is presented in the next section.</p>
+<p>A model is built based on the training data with the implementation of CV and LASSO to reduce the model.</p>
+<p><img src="LASSO_limited.png" class="img-fluid"></p>
 <p>A prediction is made using the model and the training data. A detailed presentation and comparison between the models is presented in the next section.</p>
 <ol start="2" type="1">
 <li>Build a model based when demographic variables (age, race, vaccinated, and gender) and laboratory tests are available</li>
@@ -274,6 +358,8 @@ ul.task-list li input[type="checkbox"] {
 <p>First examine the confusion matrices, the model with the lab tests performed better since it has a better true positive and true negative rate. The ROC curves also showed that the model with lab tests performed better.(The closer the ROC curve is to the upper corner, the higher the accuracy is)</p>
 <p>Overall, the model with the lab tests performed better when it comes to prediction at this specific threshold.</p>
 <p><strong>Recommendations</strong></p>
+<p>Under dispersion</p>
+<p>Threshold chosen arbitrarily,</p>
 </section>
 <section id="appendix" class="level2">
 <h2 class="anchored" data-anchor-id="appendix">Appendix</h2>
