@@ -401,15 +401,24 @@ kable(ct3)
 
 First examine the confusion matrices, the model with the lab tests performed better since it has a better true positive and true negative rate. The ROC curves also showed that the model with lab tests performed better.(The closer the ROC curve is to the upper corner, the higher the accuracy is). The model with the limited variables does not perform well to predict true negatives, and the false positive rate is high.The lack of lab tests does affect how accurate the model is. The model with the lab tests performs relatively well, the true positive and the true negative rates are relatively high.
 
-
-Overall, the model with the lab tests performed better when it comes to prediction at this specific threshold. 
+Overall, the model performed with the lab tests performed better when it comes to prediction at this specific threshold. 
 
 
 **Recommendations**
 
-Under dispersion 
+This model will be work in process and keep improving with more knowledge.
 
-Threshold chosen arbitrarily, 
+Here are topics that can be looked into more. 
+
+1.Under dispersion 
+
+
+
+2.Threshold chosen arbitrarily
+
+
+
+3. Age data partition
 
 
 
