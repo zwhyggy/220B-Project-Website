@@ -88,7 +88,7 @@ In this first case, the p-value is calculated to be $0.004791817$, therefore, un
 
 To investigate if the association depends on gender, race, age, the same technique is applied for each case: 
 
-*gender*
+*Gender*
 
 ```{r, echo=FALSE}
 
@@ -156,6 +156,9 @@ kable(ct2)
 
 The Pearson Statistic is calculated to be 0.70294, and the p value equals to *0.8725*. Therefore, under the Pearson statistic,at the 5% significance level, the null of independence failed to be rejected. 
 
+
+
+Overall, the association between infection status and vaccination status is significant.The association depends on gender, statistically speaking, based on the Chi-Square test. However, the association does not seem to depend on race and age.
 
 
 
