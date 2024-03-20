@@ -27,6 +27,8 @@ The purpose of this report is to address two topics: (1) The association between
 
 
 Conclusion: 
+(1) There is an association between COVID-19 vaccination and infection status, and it depends on the gender.
+(2) Certain lab test results such as Hematocrit and Red blood Cells along with the demographic information have a better performance predicting COVID-19 infections than using just the demographic information.  
 
 
 
@@ -271,13 +273,40 @@ A GLM model with all the covariates is fitted, then a step function is used to p
 The step function help reducing the model in a faster rate. However, it is not the best model selection method. After certain number of steps, a LASSO regression will be fitted to further reduce the model:
 
 ![](LASSO.png)
-![](signle_round.png)
+
+The above plot showed that 12 covarites will minimize the deviance
+
+```{r, echo=FALSE}
+
+ct3 <- matrix(nrow = 13, ncol = 2)
+
+ct3[ 1:13 , 1] <- c("intercept","ID", "vaccinated", "gender", "Hematocrit", "Platelets", "Red blood Cells", "Leukocytes", "Eosinophils", "MCV", "Monocytes", "RDW", "Proteina")
+
+ct3[, 2] <- c(-5.5, 0.008, -0.678, 0.514, -0.845, -0.419, 1.78, -1.234, -1.18, 0.8334, 0.4255, -0.278, 0.3547)
+
+kable(ct3)
+
+```
+
+
 
 These are the variables that were determined as significant using LASSO. 
 
 The procedure then becomes impute the missing data for these variables, fit the model and save the coefficients. This procedure will be repeated 5 times and the coefficients of the final model will be the average of the 5 sets of coefficients: 
 
-![](final_coef.png)
+
+```{r, echo=FALSE}
+
+ct3 <- matrix(nrow = 13, ncol = 2)
+
+ct3[ 1:13 , 1] <- c("intercept","ID", "vaccinated", "gender", "Hematocrit", "Platelets", "Red blood Cells", "Leukocytes", "Eosinophils", "MCV", "Monocytes", "RDW", "Proteina")
+
+ct3[, 2] <- c(-5.68, 0.0008, -0.704, 0.54, 0.356, -0.5315, 0.4, -1.16, -1.17, 0.13, 0.4, -0.279, 0.32)
+
+kable(ct3)
+
+```
+
 
 
 The prediction is then made using the final model and the testing data. As mentioned above, the logistic model predicts the probability of a binary response. Therefore, a threshold is necessary to convert the predicted probabilities to binary responses. 

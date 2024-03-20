@@ -178,7 +178,7 @@ ul.task-list li input[type="checkbox"] {
 <section id="executive-summary" class="level2">
 <h2 class="anchored" data-anchor-id="executive-summary">Executive Summary</h2>
 <p>The purpose of this report is to address two topics: (1) The association between COVID-19 vaccination and infection. Does this association depend on demographics. (2) Make predictions for COVID-19 infection using laboratory tests and demographic variables. There is a complication as not every data entry has all the laboratory tests. Imputation methods are implemented to address the missing data.</p>
-<p>Conclusion:</p>
+<p>Conclusion: (1) There is an association between COVID-19 vaccination and infection status, and it depends on the gender. (2) Certain lab test results such as Hematocrit and Red blood Cells along with the demographic information have a better performance predicting COVID-19 infections than using just the demographic information.</p>
 </section>
 <section id="introduction" class="level2">
 <h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
@@ -228,7 +228,7 @@ ul.task-list li input[type="checkbox"] {
 </div>
 <p>In this first case, the p-value is calculated to be <span class="math inline">0.004791817</span>, therefore, under the Pearson statistic, the null of independence is rejected.</p>
 <p>To investigate if the association depends on gender, race, age, the same technique is applied for each case:</p>
-<p><em>gender</em></p>
+<p><em>Gender</em></p>
 <div class="cell">
 <div class="cell-output-display">
 <table class="table table-sm table-striped small">
@@ -326,6 +326,7 @@ ul.task-list li input[type="checkbox"] {
 </div>
 </div>
 <p>The Pearson Statistic is calculated to be 0.70294, and the p value equals to <em>0.8725</em>. Therefore, under the Pearson statistic,at the 5% significance level, the null of independence failed to be rejected.</p>
+<p>Overall, the association between infection status and vaccination status is significant.The association depends on gender, statistically speaking, based on the Chi-Square test. However, the association does not seem to depend on race and age.</p>
 </section>
 <section id="topic-2" class="level3">
 <h3 class="anchored" data-anchor-id="topic-2">Topic 2:</h3>
@@ -375,10 +376,130 @@ ul.task-list li input[type="checkbox"] {
 <p>A GLM model with all the covariates is fitted, then a step function is used to produce the following:</p>
 <p><img src="step_output.png" class="img-fluid"></p>
 <p>The step function help reducing the model in a faster rate. However, it is not the best model selection method. After certain number of steps, a LASSO regression will be fitted to further reduce the model:</p>
-<p><img src="LASSO.png" class="img-fluid"> <img src="signle_round.png" class="img-fluid"></p>
+<p><img src="LASSO.png" class="img-fluid"></p>
+<p>The above plot showed that 12 covarites will minimize the deviance</p>
+<div class="cell">
+<div class="cell-output-display">
+<table class="table table-sm table-striped small">
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">intercept</td>
+<td style="text-align: left;">-5.5</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ID</td>
+<td style="text-align: left;">0.008</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">vaccinated</td>
+<td style="text-align: left;">-0.678</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">gender</td>
+<td style="text-align: left;">0.514</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Hematocrit</td>
+<td style="text-align: left;">-0.845</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Platelets</td>
+<td style="text-align: left;">-0.419</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Red blood Cells</td>
+<td style="text-align: left;">1.78</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Leukocytes</td>
+<td style="text-align: left;">-1.234</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Eosinophils</td>
+<td style="text-align: left;">-1.18</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">MCV</td>
+<td style="text-align: left;">0.8334</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Monocytes</td>
+<td style="text-align: left;">0.4255</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">RDW</td>
+<td style="text-align: left;">-0.278</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Proteina</td>
+<td style="text-align: left;">0.3547</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <p>These are the variables that were determined as significant using LASSO.</p>
 <p>The procedure then becomes impute the missing data for these variables, fit the model and save the coefficients. This procedure will be repeated 5 times and the coefficients of the final model will be the average of the 5 sets of coefficients:</p>
-<p><img src="final_coef.png" class="img-fluid"></p>
+<div class="cell">
+<div class="cell-output-display">
+<table class="table table-sm table-striped small">
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">intercept</td>
+<td style="text-align: left;">-5.68</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ID</td>
+<td style="text-align: left;">8e-04</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">vaccinated</td>
+<td style="text-align: left;">-0.704</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">gender</td>
+<td style="text-align: left;">0.54</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Hematocrit</td>
+<td style="text-align: left;">0.356</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Platelets</td>
+<td style="text-align: left;">-0.5315</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Red blood Cells</td>
+<td style="text-align: left;">0.4</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Leukocytes</td>
+<td style="text-align: left;">-1.16</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Eosinophils</td>
+<td style="text-align: left;">-1.17</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">MCV</td>
+<td style="text-align: left;">0.13</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Monocytes</td>
+<td style="text-align: left;">0.4</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">RDW</td>
+<td style="text-align: left;">-0.279</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Proteina</td>
+<td style="text-align: left;">0.32</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <p>The prediction is then made using the final model and the testing data. As mentioned above, the logistic model predicts the probability of a binary response. Therefore, a threshold is necessary to convert the predicted probabilities to binary responses.</p>
 <p>A assessment of the thresholds is performed:</p>
 <p><img src="threshold.png" class="img-fluid"></p>
