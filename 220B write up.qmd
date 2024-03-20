@@ -412,15 +412,17 @@ Here are topics that can be looked into more.
 
 1.Under dispersion 
 
+when fitting the model for part two, there is a potential display of under dispersion of the model. It is possible that a quasi binomial model can fit the data. 
 
 
 2.Threshold chosen arbitrarily
 
+The threshold to convert predicted probabilities to positive or negative cases in chosen to strike a balance between specificity and sensitivity. However, that could not be the best strategy, as a different threshold can greatly affect what the predictions are.
 
 
 3. Age data partition
 
-
+In part one, when partitioning different age ranges into groups, the ranges were chosen to balance out the number of cases in each category. However, that could not be the best strategy, as more study is needed to make a sound decision.
 
 
 
