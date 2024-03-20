@@ -117,24 +117,77 @@ As mentioned above, the lab test results are not available for all observations 
 **It is important to note that the distribution of all of these lab tests are normalized to have a mean 0 and standard deviation 1.**
 
 
-An imputation procedure called multiple imputation 
+An imputation procedure called multiple imputation will be implemented to replace the missing data, then there will be a model fitting and selection procedure. 
+
+A detailed explanation of the impuation and model fitting techniques used in this project will be presented below: 
+
+**Multiple Imputation**
+
+Multiple imputation is among the more powerful (basic) techniques for handling missing data. It follows a
+multi-step procedure. First, m different sets of imputed values are generated (usually m ∈ {5, 6, · · · , 20})
+through some appropriate method. Multivariate Gaussian imputation, where we let missing values be drawn
+from some multivariate Gaussian conditional on the observed data, is a popular choice. This process results
+in m complete datasets.
+Next, each of the m datasets are separately analyzed. This analysis can be done using whatever procedure is
+of interest – regression, ANOVA, etc. – and will yield m sets of parameter and error estimates.
+Finally, the parameter estimates from each of the m datasets are pooled to construct aggregate estimates.
+Parameter estimates can simply be replaced by the mean estimate across the m datasts. 
 
 
+**Step wise Selection**
+
+Step-by-step iterative construction of a regression model that involves the selection of independent variables to be used in a final model. It involves adding or removing potential explanatory variables in succession and testing for statistical significance after each iteration.
 
 
+**LASSO Regression**
+
+Variable selection technique, which will remove the insignificant variable to ensure model simplicity. The method of choice is called the LASSO method. The LASSO method performs both variable selection and regularization in order to improve the model and interpretability. Mathematically, it's similar to LS method :
+
+$min_{\beta} [y - f(x,\beta)]^2 + \lambda \sum |\beta|$, Where $\lambda$ is the penalty term.
+
+The main effect of this method is that some of the betas are shrunk exactly to zero, resulting in a simpler model.
 
 
+In this project, a single round of multiple imputation and variable selection will be performed.All the missing data will be sampled from a standard normal distribution.
 
 
+A GLM model with all the covariates is fitted, then a step function is used to produce the following: 
+
+![](step_output.png)
+
+The step function help reducing the model in a faster rate. However, it is not the best model selection method. After certain number of steps, a LASSO regression will be fitted to further reduce the model:
+
+![](LASSO.png)
+![](signle_round.png)
+
+These are the variables that were determined as significant using LASSO. 
+
+The procedure then becomes impute the missing data for these variables, fit the model and save the coefficients. This procedure will be repeated 5 times and the coefficients of the final model will be the average of the 5 sets of coefficients: 
+
+![](final_coef.png)
 
 
+The prediction is then made using the final model and the testing data. As mentioned above, the logistic model predicts the probability of a binary response. Therefore, a threshold is necessary to convert the predicted probabilities to binary responses. 
 
+A assessment of the thresholds is performed: 
 
+![](threshold.png)
 
+The threshold is set to 1.212678e-01 in this project to create a balance between specificity and sensitivity.
 
+Once the threshold is determined, prediction using the testing data and the two models are made. A detailed look at their performances is presented in the next section
 
 
 ## Results, conclusions and recommendations
+
+**Results**
+
+
+
+Topic 2: 
+
+
+threshold
 
 
 
@@ -144,6 +197,10 @@ An imputation procedure called multiple imputation
 
 ## Appendix
 
-## References
+## References/ Citations
 
 [GLM](https://online.stat.psu.edu/stat504/lesson/beyond-logistic-regression-generalized-linear-models-glm)
+
+[Step Selection](https://www.investopedia.com/terms/s/stepwise-regression.asp#:~:text=Stepwise%20regression%20is%20the%20step,statistical%20significance%20after%20each%20iteration.)
+
+[Multiple Imputation] 220B Section Slides 8

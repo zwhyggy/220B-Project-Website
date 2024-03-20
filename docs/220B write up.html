@@ -148,7 +148,7 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#results-conclusions-and-recommendations" id="toc-results-conclusions-and-recommendations" class="nav-link" data-scroll-target="#results-conclusions-and-recommendations">Results, conclusions and recommendations</a></li>
   <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
   <li><a href="#appendix" id="toc-appendix" class="nav-link" data-scroll-target="#appendix">Appendix</a></li>
-  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
+  <li><a href="#references-citations" id="toc-references-citations" class="nav-link" data-scroll-target="#references-citations">References/ Citations</a></li>
   </ul>
 </nav>
 </nav>
@@ -236,7 +236,24 @@ ul.task-list li input[type="checkbox"] {
 </ol>
 <p>As mentioned above, the lab test results are not available for all observations due to practical reasons. Therefore, an imputation of the missing data will be performed. The first step is to investigate which tests have missing values:</p>
 <p><img src="missing_lab.png" class="img-fluid"> <strong>It is important to note that the distribution of all of these lab tests are normalized to have a mean 0 and standard deviation 1.</strong></p>
-<p>An imputation procedure called multiple imputation</p>
+<p>An imputation procedure called multiple imputation will be implemented to replace the missing data, then there will be a model fitting and selection procedure.</p>
+<p>A detailed explanation of the impuation and model fitting techniques used in this project will be presented below:</p>
+<p><strong>Multiple Imputation</strong></p>
+<p>Multiple imputation is among the more powerful (basic) techniques for handling missing data. It follows a multi-step procedure. First, m different sets of imputed values are generated (usually m ∈ {5, 6, · · · , 20}) through some appropriate method. Multivariate Gaussian imputation, where we let missing values be drawn from some multivariate Gaussian conditional on the observed data, is a popular choice. This process results in m complete datasets. Next, each of the m datasets are separately analyzed. This analysis can be done using whatever procedure is of interest – regression, ANOVA, etc. – and will yield m sets of parameter and error estimates. Finally, the parameter estimates from each of the m datasets are pooled to construct aggregate estimates. Parameter estimates can simply be replaced by the mean estimate across the m datasts.</p>
+<p><strong>Step wise Selection</strong></p>
+<p>Step-by-step iterative construction of a regression model that involves the selection of independent variables to be used in a final model. It involves adding or removing potential explanatory variables in succession and testing for statistical significance after each iteration.</p>
+<p><strong>LASSO Regression</strong></p>
+<p>Variable selection technique, which will remove the insignificant variable to ensure model simplicity. The method of choice is called the LASSO method. The LASSO method performs both variable selection and regularization in order to improve the model and interpretability. Mathematically, it’s similar to LS method :</p>
+<p><span class="math inline">min_{\beta} [y - f(x,\beta)]^2 + \lambda \sum |\beta|</span>, Where <span class="math inline">\lambda</span> is the penalty term.</p>
+<p>The main effect of this method is that some of the betas are shrunk exactly to zero, resulting in a simpler model.</p>
+<p>In this project, a single round of multiple imputation and variable selection will be performed.All the missing data will be sampled from a standard normal distribution.</p>
+<p>A GLM model with all the covariates is fitted, then a step function is used to produce the following:</p>
+<p><img src="step_output.png" class="img-fluid"></p>
+<p>The step function help reducing the model in a faster rate. However, it is not the best model selection method. After certain number of steps, a LASSO regression will be fitted to further reduce the model:</p>
+<p><img src="LASSO.png" class="img-fluid"> <img src="signle_round.png" class="img-fluid"></p>
+<p>These are the variables that were determined as significant using LASSO.</p>
+<p>The procedure then becomes impute the missing data for these variables, fit the model and save the coefficients. This procedure will be repeated 5 times and the coefficients of the final model will be the average of the 5 sets of coefficients:</p>
+<p><img src="final_coef.png" class="img-fluid"></p>
 </section>
 </section>
 <section id="results-conclusions-and-recommendations" class="level2">
@@ -248,9 +265,11 @@ ul.task-list li input[type="checkbox"] {
 <section id="appendix" class="level2">
 <h2 class="anchored" data-anchor-id="appendix">Appendix</h2>
 </section>
-<section id="references" class="level2">
-<h2 class="anchored" data-anchor-id="references">References</h2>
+<section id="references-citations" class="level2">
+<h2 class="anchored" data-anchor-id="references-citations">References/ Citations</h2>
 <p><a href="https://online.stat.psu.edu/stat504/lesson/beyond-logistic-regression-generalized-linear-models-glm">GLM</a></p>
+<p><a href="https://www.investopedia.com/terms/s/stepwise-regression.asp#:~:text=Stepwise%20regression%20is%20the%20step,statistical%20significance%20after%20each%20iteration.">Step Selection</a></p>
+<p>[Multiple Imputation] 220B Section Slides 8</p>
 
 
 </section>
