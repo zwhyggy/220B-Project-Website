@@ -365,7 +365,78 @@ ul.task-list li input[type="checkbox"] {
 <li>Build a model based when demographic variables (age, race, vaccinated, and gender) and laboratory tests are available</li>
 </ol>
 <p>As mentioned above, the lab test results are not available for all observations due to practical reasons. Therefore, an imputation of the missing data will be performed. The first step is to investigate which tests have missing values:</p>
-<p><img src="missing_lab.png" class="img-fluid"> <strong>It is important to note that the distribution of all of these lab tests are normalized to have a mean 0 and standard deviation 1.</strong></p>
+<div class="cell">
+<div class="cell-output-display">
+<table class="table table-sm table-striped small">
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Hematocrit</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Hemoglobin</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Platelets</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Mean.platelet.volume</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Red.blood.Cells</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Lymphocytes</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Mean.corpuscular.hemoglobin.concentration.MCHC.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Leukocytes</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Basophils</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Mean.corpuscular.hemoglobin..MCH.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Eosinophils</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Mean.corpuscular.volume..MCV.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Monocytes</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Red.blood.cell.distribution.width..RDW.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Serum.Glucose</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Neutrophils</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Urea</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Proteina.C.reativa</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Creatinine</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Potassium</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Sodium</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><strong>It is important to note that the distribution of all of these lab tests are normalized to have a mean 0 and standard deviation 1.</strong></p>
 <p>An imputation procedure called multiple imputation will be implemented to replace the missing data, then there will be a model fitting and selection procedure.</p>
 <p>A detailed explanation of the impuation and model fitting techniques used in this project will be presented below:</p>
 <p><strong>Multiple Imputation</strong></p>
@@ -374,7 +445,66 @@ ul.task-list li input[type="checkbox"] {
 <p>Step-by-step iterative construction of a regression model that involves the selection of independent variables to be used in a final model. It involves adding or removing potential explanatory variables in succession and testing for statistical significance after each iteration.</p>
 <p>In this project, a single round of multiple imputation and variable selection will be performed.All the missing data will be sampled from a standard normal distribution.</p>
 <p>A GLM model with all the covariates is fitted, then a step function is used to produce the following:</p>
-<p><img src="step_output.png" class="img-fluid"></p>
+<div class="cell">
+<div class="cell-output-display">
+<table class="table table-sm table-striped small">
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">intercept</td>
+<td style="text-align: left;">-5.9</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ID</td>
+<td style="text-align: left;">0.008</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">vaccinated</td>
+<td style="text-align: left;">-0.695</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">gender</td>
+<td style="text-align: left;">0.568</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Hematocrit</td>
+<td style="text-align: left;">-1.188</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Platelets</td>
+<td style="text-align: left;">-0.45</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Red blood Cells</td>
+<td style="text-align: left;">2.18</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Leukocytes</td>
+<td style="text-align: left;">-1.255</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Eosinophils</td>
+<td style="text-align: left;">-1.26</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">MCV</td>
+<td style="text-align: left;">1.04</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Monocytes</td>
+<td style="text-align: left;">0.4339</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">RDW</td>
+<td style="text-align: left;">-0.31</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Proteina</td>
+<td style="text-align: left;">0.369</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <p>The step function help reducing the model in a faster rate. However, it is not the best model selection method. After certain number of steps, a LASSO regression will be fitted to further reduce the model:</p>
 <p><img src="LASSO.png" class="img-fluid"></p>
 <p>The above plot showed that 12 covarites will minimize the deviance</p>
@@ -502,7 +632,24 @@ ul.task-list li input[type="checkbox"] {
 </div>
 <p>The prediction is then made using the final model and the testing data. As mentioned above, the logistic model predicts the probability of a binary response. Therefore, a threshold is necessary to convert the predicted probabilities to binary responses.</p>
 <p>A assessment of the thresholds is performed:</p>
-<p><img src="threshold.png" class="img-fluid"></p>
+<div class="cell">
+<div class="cell-output-display">
+<table class="table table-sm table-striped small">
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Threshold</td>
+<td style="text-align: left;">Specificity</td>
+<td style="text-align: left;">Sensitivity</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">0.1212678</td>
+<td style="text-align: left;">0.1875</td>
+<td style="text-align: left;">0.16</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <p>The threshold is set to 1.212678e-01 in this project to create a balance between specificity and sensitivity.</p>
 <p>Once the threshold is determined, prediction using the testing data and the two models are made. A detailed look at their performances is presented in the next section</p>
 </section>
@@ -510,6 +657,7 @@ ul.task-list li input[type="checkbox"] {
 <section id="results-conclusions-and-recommendations" class="level2">
 <h2 class="anchored" data-anchor-id="results-conclusions-and-recommendations">Results, conclusions and recommendations</h2>
 <p><strong>Results</strong></p>
+<p><em>To address the first topic:</em> The first topic of interest was to study if there is an association between infection and vaccination status.The is done by a contingency table chi square test. The null hypothesis is the variables are independent and the alternative is that they are dependent. To investigate the potential impact demographic variables have on this association, multiple tests were performed.To sum up the results: the association between infection status and vaccination status is statistically significant.The association depends on gender. However,the association does not seem to depend on race and age.</p>
 <p><em>To address the second topic:</em></p>
 <p>To best present the results visually, a confusion and a ROC curve plot are construed</p>
 <p>Model w/o lab tests:</p>
@@ -518,7 +666,24 @@ ul.task-list li input[type="checkbox"] {
 <p>Model with lab tests:</p>
 <p><img src="CM.png" class="img-fluid"></p>
 <p><img src="ROC.png" class="img-fluid"></p>
-<p>First examine the confusion matrices, the model with the lab tests performed better since it has a better true positive and true negative rate. The ROC curves also showed that the model with lab tests performed better.(The closer the ROC curve is to the upper corner, the higher the accuracy is)</p>
+<p>Actual number of infections for comparison:</p>
+<div class="cell">
+<div class="cell-output-display">
+<table class="table table-sm table-striped small">
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">negative</td>
+<td style="text-align: left;">positive</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">104</td>
+<td style="text-align: left;">16</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>First examine the confusion matrices, the model with the lab tests performed better since it has a better true positive and true negative rate. The ROC curves also showed that the model with lab tests performed better.(The closer the ROC curve is to the upper corner, the higher the accuracy is). The model with the limited variables does not perform well to predict true negatives, and the false positive rate is high.The lack of lab tests does affect how accurate the model is. The model with the lab tests performs relatively well, the true positive and the true negative rates are relatively high.</p>
 <p>Overall, the model with the lab tests performed better when it comes to prediction at this specific threshold.</p>
 <p><strong>Recommendations</strong></p>
 <p>Under dispersion</p>
@@ -532,6 +697,7 @@ ul.task-list li input[type="checkbox"] {
 <p><a href="https://online.stat.psu.edu/stat504/lesson/beyond-logistic-regression-generalized-linear-models-glm">GLM</a></p>
 <p><a href="https://www.investopedia.com/terms/s/stepwise-regression.asp#:~:text=Stepwise%20regression%20is%20the%20step,statistical%20significance%20after%20each%20iteration.">Step Selection</a></p>
 <p>[Multiple Imputation] 220B Section Slides 8</p>
+<p><a href="http://www.sthda.com/english/wiki/chi-square-test-of-independence-in-r">Contigency Table</a></p>
 
 
 </section>

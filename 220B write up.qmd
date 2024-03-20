@@ -227,16 +227,24 @@ A model is built based on the training data with the implementation of CV and LA
 A prediction is made using the model and the training data. A detailed presentation and comparison between the models is presented in the next section. 
 
 
-
-
-
-
 2. Build a model based when demographic variables (age, race, vaccinated, and gender) and laboratory tests are available
 
 As mentioned above, the lab test results are not available for all observations due to practical reasons. Therefore, an imputation of the missing data will be performed. The first step is to investigate which tests have missing values: 
 
 
-![](missing_lab.png)
+```{r, echo=FALSE}
+
+ct <- matrix(nrow = 21, ncol = 1)
+
+ct[ ,1 ] <- c("Hematocrit","Hemoglobin", "Platelets", "Mean.platelet.volume", "Red.blood.Cells",
+              "Lymphocytes" , "Mean.corpuscular.hemoglobin.concentration.MCHC.", "Leukocytes", "Basophils", "Mean.corpuscular.hemoglobin..MCH.", "Eosinophils", "Mean.corpuscular.volume..MCV.", "Monocytes", "Red.blood.cell.distribution.width..RDW.", "Serum.Glucose", "Neutrophils", "Urea", "Proteina.C.reativa", "Creatinine", "Potassium", "Sodium")
+
+
+kable(ct)
+
+```
+
+
 **It is important to note that the distribution of all of these lab tests are normalized to have a mean 0 and standard deviation 1.**
 
 
@@ -268,7 +276,20 @@ In this project, a single round of multiple imputation and variable selection wi
 
 A GLM model with all the covariates is fitted, then a step function is used to produce the following: 
 
-![](step_output.png)
+
+```{r, echo=FALSE}
+
+ct3 <- matrix(nrow = 13, ncol = 2)
+
+ct3[ 1:13 , 1] <- c("intercept","ID", "vaccinated", "gender", "Hematocrit", "Platelets", "Red blood Cells", "Leukocytes", "Eosinophils", "MCV", "Monocytes", "RDW", "Proteina")
+
+ct3[, 2] <- c(-5.9, 0.008, -0.695, 0.568, -1.188, -0.45, 2.18, -1.255, -1.26, 1.04, 0.4339, -0.31, 0.369)
+
+kable(ct3)
+
+```
+
+
 
 The step function help reducing the model in a faster rate. However, it is not the best model selection method. After certain number of steps, a LASSO regression will be fitted to further reduce the model:
 
@@ -313,7 +334,19 @@ The prediction is then made using the final model and the testing data. As menti
 
 A assessment of the thresholds is performed: 
 
-![](threshold.png)
+
+```{r, echo=FALSE}
+
+ct3 <- matrix(nrow = 2, ncol = 3)
+
+ct3[1,] <- c("Threshold", "Specificity", "Sensitivity")
+
+ct3[2,] <- c(1.212678e-01, 0.1875, 0.16)
+
+
+kable(ct3)
+
+```
 
 The threshold is set to 1.212678e-01 in this project to create a balance between specificity and sensitivity.
 
@@ -322,10 +355,11 @@ Once the threshold is determined, prediction using the testing data and the two 
 
 ## Results, conclusions and recommendations
 
+
 **Results**
 
-
-
+*To address the first topic:*
+The first topic of interest was to study if there is an association between infection and vaccination status.The is done by a contingency table chi square test. The null hypothesis is the variables are independent and the alternative is that they are dependent. To investigate the potential impact demographic variables have on this association, multiple tests were performed.To sum up the results: the association between infection status and vaccination status is statistically significant.The association depends on gender. However,the association does not seem to depend on race and age.
 
 
 *To address the second topic:*
@@ -347,7 +381,25 @@ Model with lab tests:
 
 ![](ROC.png)
 
-First examine the confusion matrices, the model with the lab tests performed better since it has a better true positive and true negative rate. The ROC curves also showed that the model with lab tests performed better.(The closer the ROC curve is to the upper corner, the higher the accuracy is)
+Actual number of infections for comparison:
+
+```{r, echo=FALSE}
+
+ct3 <- matrix(nrow = 2, ncol = 2)
+
+ct3[1,] <- c("negative", "positive")
+
+ct3[2,] <- c(104,16 )
+
+
+kable(ct3)
+
+
+```
+
+
+
+First examine the confusion matrices, the model with the lab tests performed better since it has a better true positive and true negative rate. The ROC curves also showed that the model with lab tests performed better.(The closer the ROC curve is to the upper corner, the higher the accuracy is). The model with the limited variables does not perform well to predict true negatives, and the false positive rate is high.The lack of lab tests does affect how accurate the model is. The model with the lab tests performs relatively well, the true positive and the true negative rates are relatively high.
 
 
 Overall, the model with the lab tests performed better when it comes to prediction at this specific threshold. 
@@ -365,6 +417,9 @@ Threshold chosen arbitrarily,
 
 ## Appendix
 
+
+
+
 ## References/ Citations
 
 [GLM](https://online.stat.psu.edu/stat504/lesson/beyond-logistic-regression-generalized-linear-models-glm)
@@ -372,3 +427,5 @@ Threshold chosen arbitrarily,
 [Step Selection](https://www.investopedia.com/terms/s/stepwise-regression.asp#:~:text=Stepwise%20regression%20is%20the%20step,statistical%20significance%20after%20each%20iteration.)
 
 [Multiple Imputation] 220B Section Slides 8
+
+[Contigency Table](http://www.sthda.com/english/wiki/chi-square-test-of-independence-in-r)
