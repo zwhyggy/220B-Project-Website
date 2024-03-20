@@ -87,6 +87,15 @@ Logistic Regression estimates the probability of an event occurring, in this cas
 Once the probabilities are estimated, there will be a threshold that needs to be determined. For the probabilities less than that threshold, it will be set to negative, anything above the threshold will be set to positive. In the context of this problem, it will be the COVID diagnosis. 
 
 
+**LASSO Regression**
+
+Variable selection technique, which will remove the insignificant variable to ensure model simplicity. The method of choice is called the LASSO method. The LASSO method performs both variable selection and regularization in order to improve the model and interpretability. Mathematically, it's similar to LS method :
+
+$min_{\beta} [y - f(x,\beta)]^2 + \lambda \sum |\beta|$, Where $\lambda$ is the penalty term.
+
+The main effect of this method is that some of the betas are shrunk exactly to zero, resulting in a simpler model.
+
+
 To perform some EDA before fitting the model: 
 
 (a) A initial look at the data frame. Race, vaccinated and gender will be coded as factors, the infection status(y) is coded as 0 if negative and 1 if positive
@@ -102,9 +111,14 @@ To perform some EDA before fitting the model:
 It is a good practice to perform data splitting before building the model. In this case, the data frame will be separated based on the outcome variable y. Then take a 20% of random samples from the positive results and a 20% of random samples from the negative results as the testing set. The remaining will be the training set. This division will ensure there are positive cases in both training and testing, since there an overwhelming majority have a negative test result.
 
 
-A model is built based on the training data with the implementation of CV. The model results is presented in the next section. 
+A model is built based on the training data with the implementation of CV and LASSO to reduce the model. 
+
+![](LASSO_limited.png)
 
 A prediction is made using the model and the training data. A detailed presentation and comparison between the models is presented in the next section. 
+
+
+
 
 
 
@@ -138,14 +152,6 @@ Parameter estimates can simply be replaced by the mean estimate across the m dat
 
 Step-by-step iterative construction of a regression model that involves the selection of independent variables to be used in a final model. It involves adding or removing potential explanatory variables in succession and testing for statistical significance after each iteration.
 
-
-**LASSO Regression**
-
-Variable selection technique, which will remove the insignificant variable to ensure model simplicity. The method of choice is called the LASSO method. The LASSO method performs both variable selection and regularization in order to improve the model and interpretability. Mathematically, it's similar to LS method :
-
-$min_{\beta} [y - f(x,\beta)]^2 + \lambda \sum |\beta|$, Where $\lambda$ is the penalty term.
-
-The main effect of this method is that some of the betas are shrunk exactly to zero, resulting in a simpler model.
 
 
 In this project, a single round of multiple imputation and variable selection will be performed.All the missing data will be sampled from a standard normal distribution.
@@ -182,6 +188,12 @@ Once the threshold is determined, prediction using the testing data and the two 
 
 **Results**
 
+
+
+
+
+*To address the second topic:*
+
 To best present the results visually, a confusion and a ROC curve plot are construed 
 
 Model w/o lab tests: 
@@ -191,7 +203,7 @@ Model w/o lab tests:
 
 ![](ROC_limited.png)
 
-
+Model with lab tests: 
 
 
 
@@ -199,16 +211,16 @@ Model w/o lab tests:
 
 ![](ROC.png)
 
+First examine the confusion matrices, the model with the lab tests performed better since it has a better true positive and true negative rate. The ROC curves also showed that the model with lab tests performed better.(The closer the ROC curve is to the upper corner, the higher the accuracy is)
 
 
-Topic 2: 
+Overall, the model with the lab tests performed better when it comes to prediction at this specific threshold. 
 
 
-threshold
+**Recommendations**
 
 
 
-## Conclusion
 
 
 

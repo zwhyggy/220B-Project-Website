@@ -146,7 +146,6 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#topic-2" id="toc-topic-2" class="nav-link" data-scroll-target="#topic-2">Topic 2:</a></li>
   </ul></li>
   <li><a href="#results-conclusions-and-recommendations" id="toc-results-conclusions-and-recommendations" class="nav-link" data-scroll-target="#results-conclusions-and-recommendations">Results, conclusions and recommendations</a></li>
-  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
   <li><a href="#appendix" id="toc-appendix" class="nav-link" data-scroll-target="#appendix">Appendix</a></li>
   <li><a href="#references-citations" id="toc-references-citations" class="nav-link" data-scroll-target="#references-citations">References/ Citations</a></li>
   </ul>
@@ -219,6 +218,10 @@ ul.task-list li input[type="checkbox"] {
 <p>Link Function: link between random and systematic components. In this case, it’s the logit function.</p>
 <p>Logistic Regression estimates the probability of an event occurring, in this case, infection, based on given a set of independent variables(demographic variable and lab tests).</p>
 <p>Once the probabilities are estimated, there will be a threshold that needs to be determined. For the probabilities less than that threshold, it will be set to negative, anything above the threshold will be set to positive. In the context of this problem, it will be the COVID diagnosis.</p>
+<p><strong>LASSO Regression</strong></p>
+<p>Variable selection technique, which will remove the insignificant variable to ensure model simplicity. The method of choice is called the LASSO method. The LASSO method performs both variable selection and regularization in order to improve the model and interpretability. Mathematically, it’s similar to LS method :</p>
+<p><span class="math inline">min_{\beta} [y - f(x,\beta)]^2 + \lambda \sum |\beta|</span>, Where <span class="math inline">\lambda</span> is the penalty term.</p>
+<p>The main effect of this method is that some of the betas are shrunk exactly to zero, resulting in a simpler model.</p>
 <p>To perform some EDA before fitting the model:</p>
 <ol type="a">
 <li>A initial look at the data frame. Race, vaccinated and gender will be coded as factors, the infection status(y) is coded as 0 if negative and 1 if positive</li>
@@ -229,7 +232,7 @@ ul.task-list li input[type="checkbox"] {
 </ol>
 <p><img src="hist1(limited).png" class="img-fluid"></p>
 <p>It is a good practice to perform data splitting before building the model. In this case, the data frame will be separated based on the outcome variable y. Then take a 20% of random samples from the positive results and a 20% of random samples from the negative results as the testing set. The remaining will be the training set. This division will ensure there are positive cases in both training and testing, since there an overwhelming majority have a negative test result.</p>
-<p>A model is built based on the training data with the implementation of CV. The model results is presented in the next section.</p>
+<p>A model is built based on the training data with the implementation of CV and LASSO to reduce the model. The model results is presented in the next section.</p>
 <p>A prediction is made using the model and the training data. A detailed presentation and comparison between the models is presented in the next section.</p>
 <ol start="2" type="1">
 <li>Build a model based when demographic variables (age, race, vaccinated, and gender) and laboratory tests are available</li>
@@ -242,10 +245,6 @@ ul.task-list li input[type="checkbox"] {
 <p>Multiple imputation is among the more powerful (basic) techniques for handling missing data. It follows a multi-step procedure. First, m different sets of imputed values are generated (usually m ∈ {5, 6, · · · , 20}) through some appropriate method. Multivariate Gaussian imputation, where we let missing values be drawn from some multivariate Gaussian conditional on the observed data, is a popular choice. This process results in m complete datasets. Next, each of the m datasets are separately analyzed. This analysis can be done using whatever procedure is of interest – regression, ANOVA, etc. – and will yield m sets of parameter and error estimates. Finally, the parameter estimates from each of the m datasets are pooled to construct aggregate estimates. Parameter estimates can simply be replaced by the mean estimate across the m datasts.</p>
 <p><strong>Step wise Selection</strong></p>
 <p>Step-by-step iterative construction of a regression model that involves the selection of independent variables to be used in a final model. It involves adding or removing potential explanatory variables in succession and testing for statistical significance after each iteration.</p>
-<p><strong>LASSO Regression</strong></p>
-<p>Variable selection technique, which will remove the insignificant variable to ensure model simplicity. The method of choice is called the LASSO method. The LASSO method performs both variable selection and regularization in order to improve the model and interpretability. Mathematically, it’s similar to LS method :</p>
-<p><span class="math inline">min_{\beta} [y - f(x,\beta)]^2 + \lambda \sum |\beta|</span>, Where <span class="math inline">\lambda</span> is the penalty term.</p>
-<p>The main effect of this method is that some of the betas are shrunk exactly to zero, resulting in a simpler model.</p>
 <p>In this project, a single round of multiple imputation and variable selection will be performed.All the missing data will be sampled from a standard normal distribution.</p>
 <p>A GLM model with all the covariates is fitted, then a step function is used to produce the following:</p>
 <p><img src="step_output.png" class="img-fluid"></p>
@@ -264,17 +263,17 @@ ul.task-list li input[type="checkbox"] {
 <section id="results-conclusions-and-recommendations" class="level2">
 <h2 class="anchored" data-anchor-id="results-conclusions-and-recommendations">Results, conclusions and recommendations</h2>
 <p><strong>Results</strong></p>
+<p><em>To address the second topic:</em></p>
 <p>To best present the results visually, a confusion and a ROC curve plot are construed</p>
 <p>Model w/o lab tests:</p>
 <p><img src="CM_limited.png" class="img-fluid"></p>
 <p><img src="ROC_limited.png" class="img-fluid"></p>
+<p>Model with lab tests:</p>
 <p><img src="CM.png" class="img-fluid"></p>
 <p><img src="ROC.png" class="img-fluid"></p>
-<p>Topic 2:</p>
-<p>threshold</p>
-</section>
-<section id="conclusion" class="level2">
-<h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
+<p>First examine the confusion matrices, the model with the lab tests performed better since it has a better true positive and true negative rate. The ROC curves also showed that the model with lab tests performed better.(The closer the ROC curve is to the upper corner, the higher the accuracy is)</p>
+<p>Overall, the model with the lab tests performed better when it comes to prediction at this specific threshold.</p>
+<p><strong>Recommendations</strong></p>
 </section>
 <section id="appendix" class="level2">
 <h2 class="anchored" data-anchor-id="appendix">Appendix</h2>
