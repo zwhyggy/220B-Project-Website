@@ -127,6 +127,38 @@ The Pearson Statistic is calculated to be 3.689, and the p value equals to *0.05
 
 
 
+*Age*
+
+Since age is given as numerical values, they are been assigned to different categories based on an age range.
+
+The ranges are determined to best partition the data ased on the histogram shown: 
+
+![](age_hist.png)
+
+In this case, people who are less than 35 will be assigned to group 1, people who are between 35 and 45 will be assigned to group 2, people who are between 45 and 60 will be assigned to group 3 and those who are above 60 will be assigned to group 3. 
+
+
+```{r, echo=FALSE}
+
+ct2 <- matrix(nrow = 3, ncol = 5)
+ct2[,1] <- c("  ","Not infected", "infected")
+ct2[,2] <- c("Less than 35 years old", "37","4")
+ct2[,3] <- c( "Between age 35 and 45","157","27")
+ct2[,4] <- c( "Between age 45 and 60","153","24")
+ct2[,5] <- c( "Above age 60","177","29")
+
+
+kable(ct2)
+
+```
+
+
+
+The Pearson Statistic is calculated to be 0.70294, and the p value equals to *0.8725*. Therefore, under the Pearson statistic,at the 5% significance level, the null of independence failed to be rejected. 
+
+
+
+
 ### Topic 2: 
 
 There are 2 models that can be built based on how much information was used. 
