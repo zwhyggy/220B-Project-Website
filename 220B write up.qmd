@@ -34,35 +34,32 @@ Conclusion:
 
 ## Introduction
 
-The COVID-19 pandemic has changed everyone's life these past four years. The very first COVID case in the US was found in the Seattle area, where I was studying at the time. It was an experience to say at the least to be part of that ground zero COVID moment. 
+The COVID-19 pandemic has changed everyone's life these past four years. The very first COVID case in the US was found in the Seattle area, where I was studying at the time. It was an experience, to say the least, to be part of that ground-zero COVID moment.  
 
 Here is a news report from that moment in time:
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/FMc280EtXxs?si=qhrqFArvQboAPvui" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 
-After a couple years, the medical professionals were able to develop vaccinations for COVID-19. However, there were still a surge of COVID cases from time to time. It would be an interesting and important to study if there is an association between the newly infected and their vaccination status, as well as other variables that is available. 
+After a couple of years, medical professionals were able to develop vaccinations for COVID-19. However, there was still a surge of COVID cases from time to time. It would be interesting and important to study if there is an association between the newly infected and their vaccination status, as well as other available variables. 
 
-The data set contains 608 observations. Each observation contains infection status, vaccination status, demographic variables(gender, race, and age). As mentioned above, there are laboratory tests available for certain observations. The data is provided to me, and I don't have a full understanding of how the data is collected, however, it would be safe to speculate that they were collected in a place like a hospital and such.
+The data set contains 608 observations. Each observation contains infection status, vaccination status, and demographic variables(gender, race, and age). As mentioned above, there are laboratory tests available for certain observations. The data is provided to me, and I don't have a full understanding of how the data is collected, however, it would be safe to speculate that they were collected in a place like a hospital and such.
 
 
 There are two topics that this report is aiming to address: 
 
 (1) The association between COVID-19 vaccination and infection. Does this association depend on demographics
 
-
-
-(2) The relationship between COVID-19 infection and vaccination status,laboratory tests and demographic variables. Two models will be presented based on how much information was used. A assessment of the model performances will also be presented at the end. 
-
+(2) The relationship between COVID-19 infection and vaccination status, laboratory tests, and demographic variables. Two models will be presented based on how much information was used. An assessment of the model performances will also be presented at the end. 
 
 
 ## Methods
 
 ### Topic 1: 
 
-To investigate the association between COVID-19 infection and vaccination can be done by checking independence of these two variables. Then the independence can be further tested by breaking the samples into different groups based on gender, race or age. 
+To investigate the association between COVID-19 infection and vaccination can be done by checking the independence of these two variables. Then the independence can be further tested by breaking the samples into different groups based on gender, race, or age. 
 
 
-A Chi-square test is used in this case to study of the rows and columns of a contingency table are statistically associated. The null hypothesis is that the variables are independent, and the alternative is the variables are dependent.
+A Chi-square test is used in this case to study if the rows and columns of a contingency table are statistically associated. The null hypothesis is that the variables are independent, and the alternative is the variables are dependent.
 
 
 The Pearson statistic is calculated as : $\frac{ \sum (o-e)^2}{e}$
@@ -84,7 +81,6 @@ kable(ct1)
 ```
 
 In this first case, the p-value is calculated to be $0.004791817$, therefore, under the Pearson statistic, the null of independence is rejected. 
-
 
 
 
@@ -217,20 +213,42 @@ To perform some EDA before fitting the model:
 ![](hist1(limited).png)
 
 
-It is a good practice to perform data splitting before building the model. In this case, the data frame will be separated based on the outcome variable y. Then take a 20% of random samples from the positive results and a 20% of random samples from the negative results as the testing set. The remaining will be the training set. This division will ensure there are positive cases in both training and testing, since there an overwhelming majority have a negative test result.
+It is a good practice to perform data splitting before building the model. In this case, the data frame will be separated based on the outcome variable y. Then take 20% of random samples from the positive results and 20% of random samples from the negative results as the testing set. The remaining will be the training set. This division will ensure there are positive cases in both training and testing since an overwhelming majority have a negative test result.
 
 
 A model is built based on the training data with the implementation of CV and LASSO to reduce the model. 
 
 ![](LASSO_limited.png)
 
+The plot above suggests that two covarites can minimize the deviance. The model coefficenis are: 
+
+
+```{r, echo=FALSE}
+
+ct <- matrix(nrow = 3, ncol = 2)
+
+ct[,1] <- c("intercept", "Vaccinaed", "Gender Male")
+
+ct[,2] <- c(-1.7196752,  -0.8219957,   0.4850232 )
+
+
+kable(ct)
+
+```
+
+Since vaccinated and gender are categorical variables, the model reads: 
+
+
+$\hat{y} = -1.7196752  -0.8219957I_{vaccinated} + 0.485I_{male}$
+
+Where the I's are indicator variables.
+
 A prediction is made using the model and the training data. A detailed presentation and comparison between the models is presented in the next section. 
 
 
-2. Build a model based when demographic variables (age, race, vaccinated, and gender) and laboratory tests are available
+2. Build a model based when demographic variables (age, race, vaccination, and gender), and laboratory tests are available
 
 As mentioned above, the lab test results are not available for all observations due to practical reasons. Therefore, an imputation of the missing data will be performed. The first step is to investigate which tests have missing values: 
-
 
 ```{r, echo=FALSE}
 
@@ -245,7 +263,7 @@ kable(ct)
 ```
 
 
-**It is important to note that the distribution of all of these lab tests are normalized to have a mean 0 and standard deviation 1.**
+**It is important to note that the distribution of all of these lab tests are normalized to have a mean 0 and standard deviation 1.(Distribution plots of certain lab tests can be found under "Appendix")**
 
 
 An imputation procedure called multiple imputation will be implemented to replace the missing data, then there will be a model fitting and selection procedure. 
@@ -359,7 +377,8 @@ Once the threshold is determined, prediction using the testing data and the two 
 **Results**
 
 *To address the first topic:*
-The first topic of interest was to study if there is an association between infection and vaccination status.The is done by a contingency table chi square test. The null hypothesis is the variables are independent and the alternative is that they are dependent. To investigate the potential impact demographic variables have on this association, multiple tests were performed.To sum up the results: the association between infection status and vaccination status is statistically significant.The association depends on gender. However,the association does not seem to depend on race and age.
+
+The first topic of interest was to study if there is an association between infection and vaccination status. This is done by a contingency table chi-square test. The null hypothesis is the variables are independent and the alternative is that they are dependent. To investigate the potential impact demographic variables have on this association, multiple tests were performed. To sum up the results: the association between infection status and vaccination status is statistically significant. The association depends on gender. However, the association does not seem to depend on race and age.
 
 
 *To address the second topic:*
@@ -399,25 +418,24 @@ kable(ct3)
 
 
 
-First examine the confusion matrices, the model with the lab tests performed better since it has a better true positive and true negative rate. The ROC curves also showed that the model with lab tests performed better.(The closer the ROC curve is to the upper corner, the higher the accuracy is). The model with the limited variables does not perform well to predict true negatives, and the false positive rate is high.The lack of lab tests does affect how accurate the model is. The model with the lab tests performs relatively well, the true positive and the true negative rates are relatively high.
+First examine the confusion matrices, the model with the lab tests performed better since it has a better true positive and true negative rate. The ROC curves also showed that the model with lab tests performed better. (The closer the ROC curve is to the upper corner, the higher the accuracy is). The model with the limited variables does not perform well in predicting true negatives, and the false positive rate is high. The lack of lab tests does affect how accurate the model is. The model with the lab tests performs relatively well, the true positive and the true negative rates are relatively high.
 
-Overall, the model performed with the lab tests performed better when it comes to prediction at this specific threshold. 
-
+Overall, the model performed with the lab tests performed better when it came to prediction at this specific threshold. 
 
 **Recommendations**
 
-This model will be work in process and keep improving with more knowledge.
+This model will be a work in process and keep improving with more knowledge.
 
 Here are topics that can be looked into more. 
 
-1.Under dispersion 
+1. Under dispersion 
 
-when fitting the model for part two, there is a potential display of under dispersion of the model. It is possible that a quasi binomial model can fit the data. 
+when fitting the model for part two, there is a potential display of under dispersion of the model. A quasi-binomial model can potentially fit the data. 
 
 
-2.Threshold chosen arbitrarily
+2. Threshold chosen arbitrarily
 
-The threshold to convert predicted probabilities to positive or negative cases in chosen to strike a balance between specificity and sensitivity. However, that could not be the best strategy, as a different threshold can greatly affect what the predictions are.
+The threshold to convert predicted probabilities to positive or negative cases is chosen to strike a balance between specificity and sensitivity. However, that could not be the best strategy, as a different threshold can greatly affect what the predictions are.
 
 
 3. Age data partition
@@ -429,6 +447,12 @@ In part one, when partitioning different age ranges into groups, the ranges were
 ## Appendix
 
 
+![Distribution of a selected few lab tests](a1.png)
+
+
+![Diagnostic Plots for the model w/o lab tests](diagnostic_limited.png)
+
+![Diagnostic Plots for the model w lab tests](diag.png)
 
 
 ## References/ Citations
