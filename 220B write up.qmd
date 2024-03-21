@@ -280,7 +280,7 @@ A detailed explanation of the impuation and model fitting techniques used in thi
 
 **Multiple Imputation**
 
-Multiple imputation is among the more powerful (basic) techniques for handling missing data. It follows a
+"Multiple imputation is among the more powerful (basic) techniques for handling missing data. It follows a
 multi-step procedure. First, m different sets of imputed values are generated (usually m ∈ {5, 6, · · · , 20})
 through some appropriate method. Multivariate Gaussian imputation, where we let missing values be drawn
 from some multivariate Gaussian conditional on the observed data, is a popular choice. This process results
@@ -288,12 +288,12 @@ in m complete datasets.
 Next, each of the m datasets are separately analyzed. This analysis can be done using whatever procedure is
 of interest – regression, ANOVA, etc. – and will yield m sets of parameter and error estimates.
 Finally, the parameter estimates from each of the m datasets are pooled to construct aggregate estimates.
-Parameter estimates can simply be replaced by the mean estimate across the m datasts. 
+Parameter estimates can simply be replaced by the mean estimate across the m datasts." (section slides)
 
 
 **Step wise Selection**
 
-Step-by-step iterative construction of a regression model that involves the selection of independent variables to be used in a final model. It involves adding or removing potential explanatory variables in succession and testing for statistical significance after each iteration.
+"Step-by-step iterative construction of a regression model that involves the selection of independent variables to be used in a final model. It involves adding or removing potential explanatory variables in succession and testing for statistical significance after each iteration."(step selection)
 
 
 
