@@ -129,11 +129,19 @@ The Pearson Statistic is calculated to be 3.689, and the p value equals to *0.05
 
 Since age is given as numerical values, they are been assigned to different categories based on an age range.
 
-The ranges are determined to best partition the data ased on the histogram shown: 
+The ranges are determined to best partition the data based on the histogram shown: 
 
 ![](age_hist.png)
 
+
 In this case, people who are less than 35 will be assigned to group 1, people who are between 35 and 45 will be assigned to group 2, people who are between 45 and 60 will be assigned to group 3 and those who are above 60 will be assigned to group 3. 
+
+
+The distribution of the groups:
+
+![](age_group.png)
+
+
 
 
 ```{r, echo=FALSE}
@@ -453,7 +461,7 @@ In part one, when partitioning different age ranges into groups, the ranges were
 ![Diagnostic Plots for the model w/o lab tests](diagnostic_limited.png)
 
 ![Diagnostic Plots for the model w lab tests](diag.png)
-
+From examine the diagnostic plots, the more complex model has less observations with large cooks statistic than the model w/o lab tests.
 
 ## References/ Citations
 

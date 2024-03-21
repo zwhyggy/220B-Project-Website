@@ -286,9 +286,11 @@ ul.task-list li input[type="checkbox"] {
 <p>The Pearson Statistic is calculated to be 3.689, and the p value equals to <em>0.054</em>. Therefore, under the Pearson statistic,at the 5% significance level, the null of independence failed to be rejected.</p>
 <p><em>Age</em></p>
 <p>Since age is given as numerical values, they are been assigned to different categories based on an age range.</p>
-<p>The ranges are determined to best partition the data ased on the histogram shown:</p>
+<p>The ranges are determined to best partition the data based on the histogram shown:</p>
 <p><img src="age_hist.png" class="img-fluid"></p>
 <p>In this case, people who are less than 35 will be assigned to group 1, people who are between 35 and 45 will be assigned to group 2, people who are between 45 and 60 will be assigned to group 3 and those who are above 60 will be assigned to group 3.</p>
+<p>The distribution of the groups:</p>
+<p><img src="age_group.png" class="img-fluid"></p>
 <div class="cell">
 <div class="cell-output-display">
 <table class="table table-sm table-striped small">
@@ -386,7 +388,7 @@ ul.task-list li input[type="checkbox"] {
 <p>Where the I’s are indicator variables.</p>
 <p>A prediction is made using the model and the training data. A detailed presentation and comparison between the models is presented in the next section.</p>
 <ol start="2" type="1">
-<li>Build a model based when demographic variables (age, race, vaccinated, and gender) and laboratory tests are available</li>
+<li>Build a model based when demographic variables (age, race, vaccination, and gender), and laboratory tests are available</li>
 </ol>
 <p>As mentioned above, the lab test results are not available for all observations due to practical reasons. Therefore, an imputation of the missing data will be performed. The first step is to investigate which tests have missing values:</p>
 <div class="cell">
@@ -460,7 +462,7 @@ ul.task-list li input[type="checkbox"] {
 </table>
 </div>
 </div>
-<p><strong>It is important to note that the distribution of all of these lab tests are normalized to have a mean 0 and standard deviation 1.</strong></p>
+<p><strong>It is important to note that the distribution of all of these lab tests are normalized to have a mean 0 and standard deviation 1.(Distribution plots of certain lab tests can be found under “Appendix”)</strong></p>
 <p>An imputation procedure called multiple imputation will be implemented to replace the missing data, then there will be a model fitting and selection procedure.</p>
 <p>A detailed explanation of the impuation and model fitting techniques used in this project will be presented below:</p>
 <p><strong>Multiple Imputation</strong></p>
@@ -681,7 +683,8 @@ ul.task-list li input[type="checkbox"] {
 <section id="results-conclusions-and-recommendations" class="level2">
 <h2 class="anchored" data-anchor-id="results-conclusions-and-recommendations">Results, conclusions and recommendations</h2>
 <p><strong>Results</strong></p>
-<p><em>To address the first topic:</em> The first topic of interest was to study if there is an association between infection and vaccination status.The is done by a contingency table chi square test. The null hypothesis is the variables are independent and the alternative is that they are dependent. To investigate the potential impact demographic variables have on this association, multiple tests were performed.To sum up the results: the association between infection status and vaccination status is statistically significant.The association depends on gender. However,the association does not seem to depend on race and age.</p>
+<p><em>To address the first topic:</em></p>
+<p>The first topic of interest was to study if there is an association between infection and vaccination status. This is done by a contingency table chi-square test. The null hypothesis is the variables are independent and the alternative is that they are dependent. To investigate the potential impact demographic variables have on this association, multiple tests were performed. To sum up the results: the association between infection status and vaccination status is statistically significant. The association depends on gender. However, the association does not seem to depend on race and age.</p>
 <p><em>To address the second topic:</em></p>
 <p>To best present the results visually, a confusion and a ROC curve plot are construed</p>
 <p>Model w/o lab tests:</p>
@@ -707,15 +710,19 @@ ul.task-list li input[type="checkbox"] {
 </table>
 </div>
 </div>
-<p>First examine the confusion matrices, the model with the lab tests performed better since it has a better true positive and true negative rate. The ROC curves also showed that the model with lab tests performed better.(The closer the ROC curve is to the upper corner, the higher the accuracy is). The model with the limited variables does not perform well to predict true negatives, and the false positive rate is high.The lack of lab tests does affect how accurate the model is. The model with the lab tests performs relatively well, the true positive and the true negative rates are relatively high.</p>
-<p>Overall, the model performed with the lab tests performed better when it comes to prediction at this specific threshold.</p>
+<p>First examine the confusion matrices, the model with the lab tests performed better since it has a better true positive and true negative rate. The ROC curves also showed that the model with lab tests performed better. (The closer the ROC curve is to the upper corner, the higher the accuracy is). The model with the limited variables does not perform well in predicting true negatives, and the false positive rate is high. The lack of lab tests does affect how accurate the model is. The model with the lab tests performs relatively well, the true positive and the true negative rates are relatively high.</p>
+<p>Overall, the model performed with the lab tests performed better when it came to prediction at this specific threshold.</p>
 <p><strong>Recommendations</strong></p>
-<p>This model will be work in process and keep improving with more knowledge.</p>
+<p>This model will be a work in process and keep improving with more knowledge.</p>
 <p>Here are topics that can be looked into more.</p>
-<p>1.Under dispersion</p>
-<p>when fitting the model for part two, there is a potential display of under dispersion of the model. It is possible that a quasi binomial model can fit the data.</p>
-<p>2.Threshold chosen arbitrarily</p>
-<p>The threshold to convert predicted probabilities to positive or negative cases in chosen to strike a balance between specificity and sensitivity. However, that could not be the best strategy, as a different threshold can greatly affect what the predictions are.</p>
+<ol type="1">
+<li>Under dispersion</li>
+</ol>
+<p>when fitting the model for part two, there is a potential display of under dispersion of the model. A quasi-binomial model can potentially fit the data.</p>
+<ol start="2" type="1">
+<li>Threshold chosen arbitrarily</li>
+</ol>
+<p>The threshold to convert predicted probabilities to positive or negative cases is chosen to strike a balance between specificity and sensitivity. However, that could not be the best strategy, as a different threshold can greatly affect what the predictions are.</p>
 <ol start="3" type="1">
 <li>Age data partition</li>
 </ol>
@@ -723,6 +730,24 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="appendix" class="level2">
 <h2 class="anchored" data-anchor-id="appendix">Appendix</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="a1.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Distribution of a selected few lab tests</figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="diagnostic_limited.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Diagnostic Plots for the model w/o lab tests</figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="diag.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Diagnostic Plots for the model w lab tests</figcaption>
+</figure>
+</div>
 </section>
 <section id="references-citations" class="level2">
 <h2 class="anchored" data-anchor-id="references-citations">References/ Citations</h2>
